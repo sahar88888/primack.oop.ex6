@@ -7,10 +7,18 @@ public class Method extends Block {
 
     static String CREATE_REGEX = "void.*";
 
-    static CodeElement createFromLine(String line){
+    static Method createFromLine(String line){
         if(CodeElement.check_match(line,CREATE_REGEX)){
             return new Method();
         }
         else return null;
+    }
+
+
+    @Override
+    protected void checkElementType(CodeElement e) throws BadElementException {
+        if (e instanceof Method){
+            throw new BadElementException();
+        }
     }
 }
