@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
     public static String BOOLEAN_VAL = "true|false|"+DOUBLE_VAL;
     public static String CHAR_VAL = "'\\.'";
 
-    public static String VALUE = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL;//general value.
+    public static String VAL = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL;//general value.
     public static String LOGICAL_VALUE = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL;//checkable value.
 
     public static String ASSIGNMENT = "="+WHITESPACE+VAL;

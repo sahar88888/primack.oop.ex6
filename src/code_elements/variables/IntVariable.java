@@ -10,5 +10,6 @@ public class IntVariable extends Variable {
 
     static CodeElement createFromLine(String line){
         // TODO wild sex
+        return new IntVariable();
     }
 }
