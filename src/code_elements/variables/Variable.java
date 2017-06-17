@@ -17,4 +17,16 @@ abstract public class Variable extends CodeElement {
     static CodeElement createFromLine(String line){
         // TODO wild sex
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public VarType getType() {
+        return type;
+    }
+
+    public Boolean getIs_final() {
+        return is_final;
+    }
 }
