@@ -18,17 +18,16 @@ public class Method extends Block {
             "("+Custom_Regexes.VAR_TYPE+" "+Custom_Regexes.VAR_NAME+ ")*\\)" +
             "\\{";
 
-    protected Method(BufferedReader f, String line,ArrayList<Variable>
-            scope_vars)  throws IOException, BadElementException{
-        super(f,line,scope_vars);
+    protected Method(BufferedReader f, String line) throws IOException,
+            BadElementException{
+        super(f,line);
         this.line = line;
     }
 
-    static Method createFromLine(BufferedReader f, String line,
-            ArrayList<Variable> scope_vars)  throws
+    static Method createFromLine(BufferedReader f, String line)  throws
             IOException, BadElementException{
         if(CodeElement.check_match(line,CREATE_REGEX)){
-            return new Method(f, line, scope_vars);
+            return new Method(f, line);
         }
         else return null;
     }

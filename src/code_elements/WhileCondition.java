@@ -11,17 +11,15 @@ import java.util.ArrayList;
  */
 public class WhileCondition extends Condition {
 
-    protected WhileCondition(BufferedReader f, String line,
-             ArrayList<Variable> scope_vars ) throws
+    protected WhileCondition(BufferedReader f, String line) throws
             IOException, BadElementException{
-        super(f, line, scope_vars);
+        super(f, line);
     }
 
-    static WhileCondition createFromLine(BufferedReader f, String line,
-             ArrayList<Variable> scope_vars) throws
+    static WhileCondition createFromLine(BufferedReader f, String line) throws
             IOException, BadElementException {
         if (CodeElement.check_match(line, CREATE_REGEX)) {
-            return new WhileCondition(f, line, scope_vars);
+            return new WhileCondition(f, line);
         } else return null;
     }
 }

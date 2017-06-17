@@ -5,7 +5,7 @@ package code_elements;
  */
 public class MethodCall extends Statement {
 
-    static String CREATE_REGEX = "[a-zA-Z]"
+    static String CREATE_REGEX = "[a-zA-Z]";
 
     static CodeElement createFromLine(String line){
 

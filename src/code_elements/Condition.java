@@ -1,9 +1,7 @@
 package code_elements;
 
 import code_elements.variables.Variable;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import oop.Custom_Regexes;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,21 +12,21 @@ import java.util.ArrayList;
 public abstract class Condition extends Block {
 
     static public String CREATE_REGEX = "blablabla"; //TODO fix
+    static Variable.VarType[] boolTypes = new Variable.VarType[]{Variable.VarType.INT,
+            Variable.VarType.BOOLEAN, Variable.VarType.DOUBLE};
 
-    protected Condition(BufferedReader f, String def_line,
-            ArrayList<Variable> scope_vars)  throws
+    protected Condition(BufferedReader f, String def_line)  throws
             IOException, BadElementException{
-        super(f,def_line, scope_vars);
+        super(f,def_line);
     }
 
-    static Condition createFromLine(BufferedReader f, String line,
-            ArrayList<Variable> scope_vars ) throws
+    static Condition createFromLine(BufferedReader f, String line) throws
             BadElementException, IOException{
         Condition elem = null;
         if(CodeElement.check_match(line, CREATE_REGEX)) {
-            if ((elem = IfCondition.createFromLine(f, line, scope_vars))  ==
+            if ((elem = IfCondition.createFromLine(f, line))  ==
                     null) {
-                elem = WhileCondition.createFromLine(f, line, scope_vars);
+                elem = WhileCondition.createFromLine(f, line);
             }
         }
         return elem;
@@ -42,20 +40,32 @@ public abstract class Condition extends Block {
     }
 
     @Override
-    public void is_legal() throws BadElementException {
+    public void is_legal(ArrayList<Variable> scope_vars) throws
+            BadElementException {
         String[] statements = (this.definition_line.split("\\(")[1]).split
                 ("logical operators");
         for(String statement : statements){
-            if(!CodeElement.check_match(statement,Custom_Regexes.LOGICAL_VALUE)
-                    && CodeElement.check_match(statement, Custom_Regexes
+            boolean valid = false;
+            if(CodeElement.check_match(statement,Custom_Regexes.LOGICAL_VALUE)){
+                valid = true;
+            }
+            else if(CodeElement.check_match(statement, Custom_Regexes
                     .VAR_NAME)){
                 //this is a variable name, and we need to check if it exists
                 // within scope.
                 for(Variable v : scope_vars){
-                    if(v.)
+                    if(v.getName().equals(statement)){
+                        if(v.isInitialized()) {
+                            for (Variable.VarType t : boolTypes) {
+                                if (t == v.getType()) {
+                                    valid = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            else{
+            if(!valid){
                 throw new BadElementException();
             }
         }
