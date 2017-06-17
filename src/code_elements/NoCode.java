@@ -5,11 +5,12 @@ package code_elements;
  */
 public class NoCode extends CodeElement {
 
-    static CodeElement createFromLine(String line) {
-        CodeElement elem;
+    static public NoCode createFromLine(String line) {
+        NoCode elem;
         if ((elem = Empty.createFromLine(line)) == null) {
             elem = Comment.createFromLine(line);
         }
         return elem;
     }
+
 }

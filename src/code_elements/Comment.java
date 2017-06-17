@@ -6,7 +6,7 @@ package code_elements;
 public class Comment extends NoCode {
     static String CREATE_REGEX = "^//.*";
 
-    static CodeElement createFromLine(String line) {
+    static public Comment createFromLine(String line) {
         if (CodeElement.check_match(line, CREATE_REGEX)) {
             return new Comment();
         }
