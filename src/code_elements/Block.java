@@ -1,7 +1,6 @@
 package code_elements;
 
 import code_elements.variables.Variable;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,9 +18,11 @@ public abstract class Block extends CodeElement {
     ArrayList<CodeElement> elements;
     String definition_line;
 
-    protected Block(BufferedReader f, String def_line) throws IOException,
+    protected Block(BufferedReader f, String def_line,ArrayList<Variable>
+            scope_vars) throws IOException,
             BadElementException{
         this.definition_line = def_line;
+        this.scope_vars = scope_vars;
         String line;
         elements = new ArrayList<>();
         while((line=f.readLine())!=null){
@@ -29,7 +30,8 @@ public abstract class Block extends CodeElement {
                 break;
             }
             else{
-                CodeElement elem = CodeElement.createFromLine(f, line);
+                CodeElement elem = CodeElement.createFromLine(f, line,
+                        scope_vars) ;
                 if(elem==null || elem instanceof Method){
                     throw new BadElementException();
                 }
@@ -47,14 +49,22 @@ public abstract class Block extends CodeElement {
 
     protected abstract void checkElementType(CodeElement e) throws BadElementException;
 
-    static Block createFromLine(BufferedReader f,String line) throws
+    static Block createFromLine(BufferedReader f,String line,
+            ArrayList<Variable> scope_vars)  throws
             IOException, BadElementException{
         Block elem = null;
         if(CodeElement.check_match(line,CREATE_REGEX)) {
-            if ((elem = Method.createFromLine(f, line)) == null) {
-                elem = Condition.createFromLine(line);
+            if ((elem = Method.createFromLine(f, line,scope_vars)) == null) {
+                elem = Condition.createFromLine(f, line,scope_vars);
             }
         }
         return elem;
+    }
+
+    @Override
+    public void is_legal() throws BadElementException{
+        for(CodeElement e : elements){
+            e.is_legal();
+        }
     }
 }

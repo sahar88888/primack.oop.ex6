@@ -1,6 +1,8 @@
 package code_elements;
 
 import code_elements.variables.Variable;
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import oop.Custom_Regexes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,12 +43,22 @@ public abstract class Condition extends Block {
 
     @Override
     public void is_legal() throws BadElementException {
-        super.is_legal();
         String[] statements = (this.definition_line.split("\\(")[1]).split
                 ("logical operators");
         for(String statement : statements){
-            
+            if(!CodeElement.check_match(statement,Custom_Regexes.LOGICAL_VALUE)
+                    && CodeElement.check_match(statement, Custom_Regexes
+                    .VAR_NAME)){
+                //this is a variable name, and we need to check if it exists
+                // within scope.
+                for(Variable v : scope_vars){
+                    if(v.)
+                }
+            }
+            else{
+                throw new BadElementException();
+            }
         }
-
+        super.is_legal();
     }
 }
