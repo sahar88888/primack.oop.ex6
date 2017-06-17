@@ -17,8 +17,11 @@ public abstract class Block extends CodeElement {
 
     ArrayList<Variable> scope_vars;
     ArrayList<CodeElement> elements;
+    String definition_line;
 
-    protected Block(BufferedReader f) throws IOException, BadElementException{
+    protected Block(BufferedReader f, String def_line) throws IOException,
+            BadElementException{
+        this.definition_line = def_line;
         String line;
         elements = new ArrayList<>();
         while((line=f.readLine())!=null){
@@ -44,10 +47,11 @@ public abstract class Block extends CodeElement {
 
     protected abstract void checkElementType(CodeElement e) throws BadElementException;
 
-    static Block createFromLine(BufferedReader f,String line){
+    static Block createFromLine(BufferedReader f,String line) throws
+            IOException, BadElementException{
         Block elem = null;
         if(CodeElement.check_match(line,CREATE_REGEX)) {
-            if ((elem = Method.createFromLine(line)) == null) {
+            if ((elem = Method.createFromLine(f, line)) == null) {
                 elem = Condition.createFromLine(line);
             }
         }
