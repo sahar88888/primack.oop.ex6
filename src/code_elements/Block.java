@@ -3,6 +3,7 @@ package code_elements;
 import code_elements.variables.Variable;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,7 @@ public class Block extends CodeElement {
     ArrayList<Variable> scope_vars;
     ArrayList<CodeElement> elements;
 
-    protected Block(BufferedReader f){
+    protected Block(BufferedReader f) throws IOException{
         String line;
         while((line=f.readLine())!=null){
 
