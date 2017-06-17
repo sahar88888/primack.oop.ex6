@@ -10,12 +10,20 @@ import java.util.ArrayList;
  */
 public class Block extends CodeElement {
 
-    static String CREATE_REGEX = "\\(.*\\)\\s*\\{";
+    static String CREATE_REGEX = ".*\\{";
+    static String END_REGEX = "\\}";
 
     ArrayList<Variable> scope_vars;
     ArrayList<CodeElement> elements;
 
-    static CodeElement createFromLine(BufferedReader f,String line){
+    protected Block(BufferedReader f){
+        String line;
+        while((line=f.readLine())!=null){
+
+        }
+    }
+
+    static Block createFromLine(BufferedReader f,String line){
         CodeElement elem = null;
         if(CodeElement.check_match(line,CREATE_REGEX)) {
             if ((elem = Method.createFromLine(line)) == null) {

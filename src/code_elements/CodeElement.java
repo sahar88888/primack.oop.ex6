@@ -13,9 +13,7 @@ import java.util.regex.Pattern;
 public abstract class CodeElement {
     CodeElement parent;
     String src_str;
-    CodeElement(Reader f){
 
-    }
     public abstract boolean is_legal();
 
     static CodeElement createFromLine(BufferedReader f, String line){
