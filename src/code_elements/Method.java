@@ -5,7 +5,12 @@ package code_elements;
  */
 public class Method extends Block {
 
+    static String CREATE_REGEX = "void.*";
+
     static CodeElement createFromLine(String line){
-        // TODO wild sex
+        if(CodeElement.check_match(line,CREATE_REGEX)){
+            return new Method();
+        }
+        else return null;
     }
 }

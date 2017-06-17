@@ -5,7 +5,11 @@ package code_elements;
  */
 public class Empty extends NoCode {
 
+    static String CREATE_REGEX = "\\s";
     static CodeElement createFromLine(String line){
-        // TODO wild sex
+        if(CodeElement.check_match(line,CREATE_REGEX)){
+            return new Empty();
+        }
+        else return null;
     }
 }

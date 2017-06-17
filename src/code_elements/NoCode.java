@@ -5,7 +5,11 @@ package code_elements;
  */
 public class NoCode extends CodeElement {
 
-    static CodeElement createFromLine(String line){
-        // TODO wild sex
+    static CodeElement createFromLine(String line) {
+        CodeElement elem;
+        if ((elem = Empty.createFromLine(line)) == null) {
+            elem = Comment.createFromLine(line);
+        }
+        return elem;
     }
 }

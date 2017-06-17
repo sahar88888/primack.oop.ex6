@@ -5,7 +5,13 @@ package code_elements;
  */
 public class Statement extends CodeElement {
 
-    static CodeElement createFromLine(String line){
-        // TODO wild sex
+    static CodeElement createFromLine(String line) {
+        CodeElement elem;
+        if ((elem = VarDeclaration.createFromLine(line)) == null) {
+            if ((elem = VarAssignment.createFromLine(line)) == null) {
+                elem = MethodCall.createFromLine(line);
+            }
+        }
+        return elem;
     }
 }

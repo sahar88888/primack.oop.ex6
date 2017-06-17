@@ -5,7 +5,12 @@ package code_elements;
  */
 public class IfCondition extends Condition {
 
+    static String CREATE_REGEX = "if.*";
+
     static CodeElement createFromLine(String line){
-        // TODO wild sex
+        if(CodeElement.check_match(line,CREATE_REGEX)){
+            return new IfCondition();
+        }
+        else return null;
     }
 }

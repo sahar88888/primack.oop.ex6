@@ -6,6 +6,10 @@ package code_elements;
 public class Condition extends Block {
 
     static CodeElement createFromLine(String line){
-        // TODO wild sex
+        CodeElement elem;
+        if((elem = IfCondition.createFromLine(line))==null){
+            elem = WhileCondition.createFromLine(line);
+        }
+        return elem;
     }
 }
