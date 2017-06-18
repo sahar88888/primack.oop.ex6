@@ -28,6 +28,7 @@ import static code_elements.variables.Variable.VarType.*;
 
     public static String ASSIGNMENT = "="+WHITESPACE+VAL;
     public static String LINE_END = "\\.*;\\.*";
+    public static String BOOLEAN_OPERATOR = "[\\|\\| | \\&\\&]";//string for boolean operator.
 
 
    /**
