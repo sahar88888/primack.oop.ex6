@@ -54,7 +54,7 @@ public abstract class CodeElement {
      * context, in this codeElement.
      * @return
      */
-    public void is_legal() throws BadElementException{
-    }
+    public abstract void is_legal(ArrayList<Variable> scope_vars) throws
+            BadElementException;
 
 }

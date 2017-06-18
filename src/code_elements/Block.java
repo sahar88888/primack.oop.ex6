@@ -56,9 +56,12 @@ public abstract class Block extends CodeElement {
         return elem;
     }
 
-    @Override
-    public void is_legal() throws BadElementException{
+    public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
+        ArrayList<Variable> vars = new ArrayList<>();
         for(CodeElement e : elements){
+            if(e instanceof VarDeclaration){
+                for(Variable v : e.)
+            }
             e.is_legal();
         }
     }
