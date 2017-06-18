@@ -5,7 +5,7 @@ package code_elements;
  */
 public class Statement extends CodeElement {
 
-    static CodeElement createFromLine(String line) {
+    static CodeElement createFromLine(String line) throws BadElementException {
         CodeElement elem;
         if ((elem = VarDeclaration.createFromLine(line)) == null) {
             if ((elem = VarAssignment.createFromLine(line)) == null) {

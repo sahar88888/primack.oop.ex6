@@ -58,11 +58,28 @@ public abstract class Block extends CodeElement {
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
         ArrayList<Variable> vars = new ArrayList<>();
+        for(Variable v2: scope_vars){
+            vars.add(v2);
+        }
         for(CodeElement e : elements){
+            e.is_legal(vars);
             if(e instanceof VarDeclaration){
-                for(Variable v : e.)
+                for(Variable v : ((VarDeclaration) e).getVars()){
+                    for(Variable v2: scope_vars){
+                        if(v.getName().equals(v2.getName())){
+                            vars.remove(v2); //override outer scope variable
+                            break;
+                        }
+                    }
+                    for(Variable v2: vars){
+                        if(v.getName().equals(v2.getName())){
+                            throw new BadElementException(); //two variables
+                            // with same name, declared in this scope!
+                        }
+                    }
+                    vars.add(v);
+                }
             }
-            e.is_legal();
         }
     }
 }
