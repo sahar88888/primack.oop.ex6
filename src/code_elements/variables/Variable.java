@@ -6,10 +6,11 @@ import code_elements.CodeElement;
  * Created by t8417719 on 12/06/2017.
  */
 abstract public class Variable extends CodeElement {
-    enum VarType{BOOLEAN,STRING,INT,DOUBLE}
+    public enum VarType{BOOLEAN,STRING,INT,DOUBLE}
     String name;
     VarType type;
-    Boolean is_final;
+    boolean is_final;
+    boolean initialized;
 
     public Variable() {
     }
@@ -26,7 +27,11 @@ abstract public class Variable extends CodeElement {
         return type;
     }
 
-    public Boolean getIs_final() {
+    public boolean is_final() {
         return is_final;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 }

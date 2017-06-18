@@ -13,17 +13,15 @@ public class IfCondition extends Condition {
 
     static String CREATE_REGEX = "if.*";
 
-    protected IfCondition(BufferedReader f, String def_line,
-              ArrayList<Variable> scope_vars ) throws
+    protected IfCondition(BufferedReader f, String def_line) throws
             IOException, BadElementException{
-        super(f,def_line, scope_vars);
+        super(f,def_line);
     }
 
-    static IfCondition createFromLine(BufferedReader f, String line,
-            ArrayList<Variable> scope_vars)  throws
+    static IfCondition createFromLine(BufferedReader f, String line)  throws
             IOException, BadElementException {
         if(CodeElement.check_match(line,CREATE_REGEX)){
-            return new IfCondition(f, line,scope_vars);
+            return new IfCondition(f, line);
         }
         else return null;
     }

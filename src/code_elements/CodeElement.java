@@ -26,13 +26,12 @@ public abstract class CodeElement {
      * @throws IOException
      * @throws BadElementException
      */
-    static CodeElement createFromLine(BufferedReader f, String line,
-                                      ArrayList<Variable> scope_vars) throws
+    static CodeElement createFromLine(BufferedReader f, String line) throws
             IOException, BadElementException{
         CodeElement elem;
-        if((elem = Block.createFromLine(f,line,scope_vars))==null){
+        if((elem = Block.createFromLine(f,line))==null){
             if((elem=NoCode.createFromLine(line))==null){
-                elem = Statement.createFromLine(f,line,scope_vars);
+                elem = Statement.createFromLine(f,line);
             }
         }
         return elem;
