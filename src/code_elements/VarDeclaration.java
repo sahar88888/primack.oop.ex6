@@ -14,27 +14,52 @@ import  static oop.Custom_Regexes.*;
  */
 public class VarDeclaration extends Statement {
 
-    static Pattern p = Pattern.compile(VAR_TYPE+"[\\s]+("+VAR_NAME+WHITESPACE+","+WHITESPACE+")*"+VAR_NAME+WHITESPACE);
+    static String Line_Regex= VAR_TYPE+"[\\s]+("+VAR_NAME+WHITESPACE+","+WHITESPACE+")*"+VAR_NAME+WHITESPACE +
+            "("+ASSIGNMENT+")?"+LINE_END;
 
+    private ArrayList<String> vars;//String of variables declared
+    private String type;//
 
-    private ArrayList<String> vars;
-    private String Type;
+    public VarDeclaration(ArrayList<String> vars, String type) {
+        this.vars = vars;
+        this.type = type;
+    }
 
     static VarDeclaration createFromLine(String line){
         // TODO wild sex
-        Matcher m  = p.matcher(line);
-        if (m.matches())
-        {
-            ArrayList<String> var_names = new ArrayList<>();
-            m = p.matcher(VAR_NAME);//setting m to find all variable names.
 
-            m.find();
+        if (line.matches(Line_Regex))
+        {
+            String[] LineParts = line.split("=",2); //splitting the line to a max of 2 parts: vars and assignment.
+
+            ArrayList<String> var_names = new ArrayList<>();
+
+            //TAKE CARE OF - DEAL WITH THE CASE OF ASSIGNMENT!
+            Pattern p = Pattern.compile(VAR_NAME);
+            Matcher m = p.matcher(LineParts[0]);//searching for names in the first part.
+
+            m.find();//to skip the variable type, that surely could be a var name.
             String type = Cut(line,m);
-            while (m.find()){
+
+            while (m.find()) //getting all variable names.
+            {
                 var_names.add(Cut(line,m));//adding all names to the array.
             }
+            if(LineParts.length>1){ //if there is also an assignment
+
+            }
+
+            return new VarDeclaration(var_names,type);
         }
         else
             return null;
+    }
+
+    public ArrayList<String> getVars() {
+        return vars;
+    }
+
+    public String getType() {
+        return type;
     }
 }
