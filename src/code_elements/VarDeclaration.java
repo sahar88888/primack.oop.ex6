@@ -16,54 +16,67 @@ import  static oop.Custom_Regexes.*;
  */
 public class VarDeclaration extends Statement {
 
-    static String Line_Regex= VAR_TYPE+"[\\s]+("+VAR_NAME+WHITESPACE+","+WHITESPACE+")*"+VAR_NAME+WHITESPACE +
-            "("+ASSIGNMENT+")?"+LINE_END;
+    static String Line_Regex= "("+VAR_TYPE+"[\\s]+("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
+            +NAME_OR_ASSIGNMENT+WHITESPACE +")"+LINE_END;
+    static String Split_Str = ",";
 
-    private ArrayList<Variable> vars;//String of variables declared
-    private String type;//
+    private ArrayList<Variable> vars;//list of variables declared
+    private ArrayList<VarAssignment> assignments;//a list of assignments made during declaration.
+    private VarType type; //
 
-    public VarDeclaration(ArrayList<Variable> vars, String type) {
+    public VarDeclaration(ArrayList<Variable> vars,VarType type,ArrayList<VarAssignment> assignments) {
         this.vars = vars;
         this.type = type;
+        this.assignments = assignments;
     }
 
     static VarDeclaration createFromLine(String line) throws BadElementException{
         // TODO wild sex
+        Pattern p = Pattern.compile(Line_Regex);
+        Matcher m = p.matcher(line);
 
-        if (line.matches(Line_Regex))
+        if (m.matches())
         {
-            String[] LineParts = line.split("=",2); //splitting the line to a max of 2 parts: vars and assignment.
-
-            ArrayList<VarType> var_names = new ArrayList<>();
+            line = m.group(1);//cutting off the ';' and residual whitespaces.
+            ArrayList<Variable> vars = new ArrayList<>();//list of variables.
+            ArrayList<VarAssignment> assignments = new ArrayList<>();//list of assignments
 
             //TAKE CARE OF - DEAL WITH THE CASE OF ASSIGNMENT!
-            Pattern p = Pattern.compile(VAR_NAME);
-            Matcher m = p.matcher(LineParts[0]);//searching for names in the first part.
 
-            m.find();//to skip the variable type, that surely could be a var name.
+            p = Pattern.compile(VAR_TYPE);
+            m = p.matcher(line);//searching for the type
+            m.find();
             String type_str = Cut(line,m);
-            VarType type = GetValueType(type_str);
+            VarType type = GetValueTypeFromName(type_str);
+            //cutting the line to a smaller one containing only the variables and assignments
+            line = line.substring(m.start(),line.length()-1);
 
-            while (m.find()) //getting all variable names.
+            String[] line_parts = line.split(Split_Str);
+
+            for(String part:line_parts)
             {
-                String var_name=Cut(line,m);//adding all names to the array.
-                Variable var = new Variable(var_name,type);
-            }
-            if(LineParts.length>1){ //if there is also an assignment
+                String[] var_parts = part.split("=");//splitting a part to a var name and perhaps assigned value.
+                String var_string = Find(VAR_NAME,var_parts[0]);
+                vars.add(new Variable(var_string,type));
 
+                if(var_parts.length>1) {//if there's a value assignment:
+                    String val_string = Find(VAL,var_parts[1]);
+                    VarAssignment assignment = new VarAssignment(var_string,val_string);
+                    assignments.add(assignment);
+                }
             }
 
-            return new VarDeclaration(var_names,type);
+            return new VarDeclaration(vars,type,assignments);
         }
         else
             return null;
     }
 
-    public ArrayList<String> getVars() {
+    public ArrayList<Variable> getVars() {
         return vars;
     }
 
-    public String getType() {
+    public VarType getType() {
         return type;
     }
 }

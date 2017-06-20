@@ -1,6 +1,7 @@
 package oop;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import code_elements.BadElementException;
 import code_elements.variables.Variable.VarType;
@@ -11,10 +12,11 @@ import static code_elements.variables.Variable.VarType.*;
  * A library of  custom regexes for our use.
  */
  public class Custom_Regexes {
-    public static String VAR_TYPE = "[int|double|String|boolean|char]";
+    public static String WHITESPACE = "\\s*";
+    public static String VAR_TYPE = "(final)?"+WHITESPACE+"(int|double|String|boolean|char)";
     public static String VAR_NAME = "[a-zA-Z_][\\w]*";// a pattern for a var name. (e.g. A1, _Zorg_42).
     public static String METHOD_NAME = "[a-zA-Z][\\w]*";// a pattern for a name. (e.g. A1, print_files
-    public static String WHITESPACE = "\\s*";
+
 
     // strings for variable values:
     public static String INT_VAL = "-?[\\d]*";
@@ -26,8 +28,9 @@ import static code_elements.variables.Variable.VarType.*;
     public static String VAL = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL;//general value.
     public static String LOGICAL_VALUE = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL;//checkable value.
 
-    public static String ASSIGNMENT = "="+WHITESPACE+VAL;
-    public static String LINE_END = "\\.*;\\.*";
+    public static String ASSIGNMENT = "("+VAR_NAME+")"+WHITESPACE+"="+WHITESPACE+"("+VAL+")";
+    public static String NAME_OR_ASSIGNMENT = "["+VAR_NAME+"|"+ASSIGNMENT+"]";
+    public static String LINE_END = WHITESPACE+";"+WHITESPACE;
     public static String BOOLEAN_OPERATOR = "[\\|\\| | \\&\\&]";//string for boolean operator.
 
 
@@ -48,7 +51,7 @@ import static code_elements.variables.Variable.VarType.*;
      * @return the matching type.
      * @throws BadElementException if no type was matched - illegal value.
      */
-    public static VarType GetValueType (String valString) throws BadElementException
+    public static VarType GetValueTypeFromName(String valString) throws BadElementException
     {
         if(valString.matches(INT_VAL))
             return INT;
@@ -62,5 +65,38 @@ import static code_elements.variables.Variable.VarType.*;
             return CHAR;
 
         throw new BadElementException(); //no type was matched.
+    }
+
+    /**
+     * getting the matching regex to a given VarType.
+     * @param type the VarType.
+     * @return the matching regex.
+     */
+    public static String GetRegexFromVarType(VarType type)
+    {
+        switch(type)
+        {
+            case INT: return INT_VAL;
+            case DOUBLE: return DOUBLE_VAL;
+            case STRING: return STRING_VAL;
+            case BOOLEAN: return BOOLEAN_VAL;
+            case CHAR: return CHAR_VAL;
+
+            default: return null;//should never get here - we have only our varTypes, and we covered all of them.
+        }
+    }
+
+    /**
+     * find a substring in the string corresponding to a regex.
+     * @param regex the regex in question.
+     * @param string the string.
+     * @return the first substring found matching the regex.
+     */
+    public static String Find(String regex, String string)
+    {
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(string);
+        m.find();
+        return Cut(string,m);
     }
 }

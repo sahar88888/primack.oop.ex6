@@ -39,7 +39,41 @@ public class VarAssignment extends Statement {
     }
 
     @Override
-    public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
+    /**
+     * checking legality while assigning matching values
+     */
+    public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException
+    {
+        Variable var =find_var_by_string(scope_vars,varName);
 
+        String value;// the value to be assigned.
+        if(valName.matches(VAL))//if a value is trying to be assigned.
+            value = valName;
+
+        else //we're trying to assign a variable to the variable. valName is a name of a variable.
+        {
+            Variable assigned_val = find_var_by_string(scope_vars,valName);
+            value = assigned_val.getValue();
+        }
+
+        var.assign(value);//assigning the value to the variable.
+
+    }
+
+    /**
+     * findindg a variable with a given variable name, in a list of variables.
+     * @param variables
+     * @param varName
+     * @return
+     * @throws BadElementException if the variable was not found.
+     */
+    static Variable find_var_by_string(ArrayList<Variable> variables, String varName) throws BadElementException
+    {
+        for (Variable var : variables)
+        {
+            if (var.getName().equals(varName))
+                return var;
+        }
+        throw new BadElementException();//if the variable wasn't found..
     }
 }
