@@ -42,6 +42,11 @@ public class Program extends Block {
                 i--;
             }
             if(e instanceof Method) {
+                for(Method m : methods){
+                    if(m.getName().equals(((Method) e).getName())){
+                        throw new BadElementException();
+                    }
+                }
                 methods.add((Method) e);
             }
 
