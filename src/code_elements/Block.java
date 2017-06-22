@@ -1,6 +1,7 @@
 package code_elements;
 
 import code_elements.variables.Variable;
+import oop.ex6.main.Program;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,6 +57,16 @@ public abstract class Block extends CodeElement {
             }
         }
         return elem;
+    }
+
+    /**
+     * copying all variables from the father's scope.
+     * @throws BadElementException
+     */
+    private void Copy_vars(ArrayList<Variable> scope_vars) throws BadElementException
+    {
+        for (Variable var: scope_vars)
+            local_vars.add(var.getCopy());
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
