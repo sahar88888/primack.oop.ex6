@@ -14,9 +14,9 @@ import static oop.Custom_Regexes.*;
 public class Variable {
 
     public enum VarType{BOOLEAN,STRING,INT,DOUBLE,CHAR}
-    String name;
-    String value;
-    VarType type;
+    private String name;
+    private String value;
+    private VarType type;
     boolean is_final = false;
     boolean initialized;
 
@@ -31,6 +31,19 @@ public class Variable {
         this.type = GetValueTypeFromName(type_String);
     }
 
+    /**
+     *
+     * @param var creating a variable
+     * @throws BadElementException
+     */
+    public Variable( Variable var) throws BadElementException
+    {
+        this.name = var.getName();
+        this.type = var.getType();
+        this.value = var.getValue();
+
+    }
+
     public String getName() {
         return name;
     }
@@ -38,6 +51,7 @@ public class Variable {
     public VarType getType() {
         return type;
     }
+
 
     public boolean is_final() {
         return is_final;
@@ -70,5 +84,15 @@ public class Variable {
             throw new BadElementException();
 
         return value;
+    }
+
+    /**
+     * generates a copy of the
+     * @return
+     * @throws BadElementException
+     */
+    public Variable getCopy() throws BadElementException
+    {
+        return new Variable(this);
     }
 }
