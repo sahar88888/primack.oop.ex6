@@ -14,11 +14,13 @@ public abstract class Block extends CodeElement {
     static String CREATE_REGEX = ".*\\{";
     static String END_REGEX = "\\}";
 
-    ArrayList<CodeElement> elements;
+    protected ArrayList<CodeElement> elements;
     String definition_line;
+    protected ArrayList<Variable> local_vars;
 
     protected Block(BufferedReader f, String def_line) throws IOException,
             BadElementException{
+        local_vars = new ArrayList<>();
         this.definition_line = def_line;
         String line;
         elements = new ArrayList<>();
@@ -57,29 +59,31 @@ public abstract class Block extends CodeElement {
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
-        ArrayList<Variable> vars = new ArrayList<>();
         for(Variable v2: scope_vars){
-            vars.add(v2);
+            local_vars.add(v2);
         }
         for(CodeElement e : elements){
-            e.is_legal(vars);
             if(e instanceof VarDeclaration){
                 for(Variable v : ((VarDeclaration) e).getVars()){
-                    for(Variable v2: scope_vars){
-                        if(v.getName().equals(v2.getName())){
-                            vars.remove(v2); //override outer scope variable
-                            break;
-                        }
-                    }
-                    for(Variable v2: vars){
-                        if(v.getName().equals(v2.getName())){
-                            throw new BadElementException(); //two variables
-                            // with same name, declared in this scope!
-                        }
-                    }
-                    vars.add(v);
+                    overrideVarByName(v.getName(),scope_vars);
+                }
+            }
+            e.is_legal(local_vars);
+            if(e instanceof VarDeclaration){
+                for(Variable v : ((VarDeclaration) e).getVars()){
+                    local_vars.add(v);
                 }
             }
         }
     }
+
+    protected void overrideVarByName(String name, ArrayList<Variable> scope_vars){
+        for(Variable v: scope_vars){
+            if(v.getName().equals(name)){
+                local_vars.remove(v);
+                break; //no more than one.
+            }
+        }
+    }
+
 }

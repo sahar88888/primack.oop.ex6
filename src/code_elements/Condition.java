@@ -42,6 +42,7 @@ public abstract class Condition extends Block {
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws
             BadElementException {
+        super.is_legal(scope_vars);
         String[] statements = ((this.definition_line.split("\\)")[0]).split
                 ("\\(")[1]).split("logical operators");
         for(String statement : statements){
@@ -69,6 +70,5 @@ public abstract class Condition extends Block {
                 throw new BadElementException();
             }
         }
-        super.is_legal();
     }
 }
