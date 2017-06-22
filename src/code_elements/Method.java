@@ -15,14 +15,15 @@ import java.util.regex.Pattern;
 public class Method extends Block {
 
     String line;
-
+    ArrayList<Variable.VarType> paramTypes;
     static String PARAM_REGEX = Custom_Regexes.VAR_TYPE+Custom_Regexes
             .WHITESPACE+Custom_Regexes.VAR_NAME+Custom_Regexes.WHITESPACE;
-
+    String name;
     protected Method(BufferedReader f, String line) throws IOException,
             BadElementException{
         super(f,line);
         this.line = line;
+        paramTypes = new ArrayList<>();
     }
 
     static Method createFromLine(BufferedReader f, String line)  throws
@@ -46,6 +47,7 @@ public class Method extends Block {
         super.is_legal(scope_vars);
         String parameters = ((this.definition_line.split("\\)")[0]).split
                 ("\\(")[1]);
+        this.name = this.definition_line.split(Custom_Regexes.WHITESPACE)[1];
         Pattern p = Pattern.compile(PARAM_REGEX);
         Matcher m = p.matcher(parameters);
         while(m.find()){
@@ -56,7 +58,16 @@ public class Method extends Block {
             VarDeclaration var_dec = VarDeclaration.createFromLine(sub);
             for(Variable v: var_dec.getVars()) {
                 local_vars.add(v);
+                paramTypes.add(v.getType());
             }
         }
+    }
+
+    public Variable.VarType getParamType(int index){
+        return paramTypes.get(index);
+    }
+
+    public String getName(){
+        return name;
     }
 }

@@ -57,4 +57,11 @@ public abstract class CodeElement {
     public abstract void is_legal(ArrayList<Variable> scope_vars) throws
             BadElementException;
 
+    protected boolean varExists(String name, ArrayList<Variable> vars){
+        for(Variable v : vars){
+            if(v.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
 }

@@ -13,11 +13,10 @@ import java.util.ArrayList;
  */
 public class Program extends Block {
 
-    public static ArrayList<Variable> GlobalVars;
-    public static ArrayList<String> methodNames;
+    static ArrayList<Method> methods;
 
     public Program(BufferedReader f) throws IOException, BadElementException{
-        super(f);
+        super(f, "");
     }
 
     @Override
@@ -37,14 +36,22 @@ public class Program extends Block {
             if (e instanceof VarDeclaration) {
                 e.is_legal(local_vars);
                 for (Variable v : ((VarDeclaration) e).getVars()) {
-                    local_vars.add();
+                    local_vars.add(v);
                 }
                 elements.remove(i);
                 i--;
             }
+            if(e instanceof Method) {
+                methods.add((Method) e);
+            }
+
         }
         for(CodeElement e : elements){
-            e.is_legal(local_vars);
+            e.is_legal();
         }
+    }
+
+    public static ArrayList<Method> getMethods(){
+        return methods;
     }
 }
