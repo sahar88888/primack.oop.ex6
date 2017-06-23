@@ -40,18 +40,8 @@ public class MethodCall extends Statement {
             for (int i = 0; i < params.size(); i++) {
                 //check if it's a var name or a value.
                 String param = params.get(i);
-                if (CheckMatch(param, VAR_NAME
-                        + "|" + VAL)) {
-                    if (CheckMatch(param, VAR_NAME)) {
-                        if (!varExists(param, scope_vars)) {
-                            throw new BadElementException();
-                        }
-                    }
-                    else if (!(GetValueTypeFromName(param) ==
-                            method.getParamType(i))){
-                        throw new BadElementException();
-                    }
-                } else {
+                Variable.VarType type = GetExpressionType(param,scope_vars);
+                if(type!=method.getParamType(i)){
                     throw new BadElementException();
                 }
             }
@@ -60,4 +50,5 @@ public class MethodCall extends Statement {
             throw new BadElementException();
         }
     }
+
 }

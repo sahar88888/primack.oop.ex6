@@ -72,8 +72,8 @@ public abstract class CodeElement {
         throw new BadElementException();//if the variable wasn't found..
     }
 
-    protected static Variable.VarType getExpressionType(String expr,
-                    ArrayList<Variable> scope_vars) throws BadElementException{
+    protected static Variable.VarType GetExpressionType(String expr,
+                 ArrayList<Variable> scope_vars) throws BadElementException{
         if(expr.matches(VAR_NAME)){
             Variable v = findVarByName(expr,scope_vars);
             if(v!=null && v.isInitialized()){
