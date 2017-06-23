@@ -52,7 +52,7 @@ public class Program extends Block {
 
         }
         for(CodeElement e : elements){
-            e.is_legal();
+            e.is_legal(scope_vars);
         }
     }
 
