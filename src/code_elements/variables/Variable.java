@@ -97,4 +97,11 @@ public class Variable {
     {
         return new Variable(this);
     }
+
+    public boolean isBoolean(){
+        if(type==VarType.BOOLEAN || type==VarType.DOUBLE || type==VarType.INT){
+            return true;
+        }
+        return false;
+    }
 }

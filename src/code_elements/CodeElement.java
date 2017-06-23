@@ -15,9 +15,11 @@ import java.util.regex.Pattern;
  * Created by t8417719 on 12/06/2017.
  */
 public abstract class CodeElement {
-    CodeElement parent;
-    String src_str;
+    protected String def_line;
 
+    protected CodeElement(String line){
+        this.def_line=  line;
+    }
     /**
      *
      * @param f
@@ -63,10 +65,9 @@ public abstract class CodeElement {
      * @return
      * @throws BadElementException if the variable was not found.
      */
-    static Variable find_var_by_string(ArrayList<Variable> variables, String varName) throws BadElementException
-    {
-        for (Variable var : variables)
-        {
+    protected static Variable find_var_by_string(ArrayList<Variable> variables,
+             String varName) throws BadElementException {
+        for (Variable var : variables) {
             if (var.getName().equals(varName))
                 return var;
         }

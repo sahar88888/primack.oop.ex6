@@ -7,7 +7,11 @@ import java.util.ArrayList;
 /**
  * Created by t8417719 on 12/06/2017.
  */
-public class NoCode extends CodeElement {
+public abstract class NoCode extends CodeElement {
+
+    protected NoCode(String line){
+        super(line);
+    }
 
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {

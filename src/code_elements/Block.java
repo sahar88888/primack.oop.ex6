@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static oop.Custom_Regexes.CheckMatch;
+
 /**
  * Created by t8417719 on 12/06/2017.
  */
@@ -15,17 +17,16 @@ public abstract class Block extends CodeElement {
     static String END_REGEX = "\\}";
 
     protected ArrayList<CodeElement> elements;
-    String definition_line;
     protected ArrayList<Variable> local_vars;
 
     protected Block(BufferedReader f, String def_line) throws IOException,
             BadElementException{
+        super(def_line);
         local_vars = new ArrayList<>();
-        this.definition_line = def_line;
         String line;
         elements = new ArrayList<>();
         while((line=f.readLine())!=null){
-            if(check_match(line,END_REGEX)){ //skipping all lines until end
+            if(CheckMatch(line,END_REGEX)){ //skipping all lines until end
                 break;
             }
             else{
@@ -51,7 +52,7 @@ public abstract class Block extends CodeElement {
 
             IOException, BadElementException{
         Block elem = null;
-        if((line,CREATE_REGEX)) {
+        if(CheckMatch(line,CREATE_REGEX)) {
             if ((elem = Method.createFromLine(f, line)) == null) {
                 elem = Condition.createFromLine(f, line);
             }

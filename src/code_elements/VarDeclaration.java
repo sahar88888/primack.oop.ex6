@@ -24,14 +24,16 @@ public class VarDeclaration extends Statement {
     private ArrayList<VarAssignment> assignments;//a list of assignments made during declaration.
     private VarType type; //
 
-    public VarDeclaration(ArrayList<Variable> vars,VarType type,ArrayList<VarAssignment> assignments) {
+    protected VarDeclaration(String line, ArrayList<Variable> vars,VarType
+            type,
+                     ArrayList<VarAssignment> assignments) {
+        super(line);
         this.vars = vars;
         this.type = type;
         this.assignments = assignments;
     }
 
     static VarDeclaration createFromLine(String line) throws BadElementException{
-        // TODO wild sex
         Pattern p = Pattern.compile(Line_Regex);
         Matcher m = p.matcher(line);
 
@@ -63,12 +65,13 @@ public class VarDeclaration extends Statement {
 
                 if(var_parts.length>1) {//if there's a value assignment:
                     String val_string = Find(VAL,var_parts[1]);
-                    VarAssignment assignment = new VarAssignment(var_string,val_string);
+                    VarAssignment assignment = new VarAssignment
+                            (line,var_string,val_string);
                     assignments.add(assignment);
                 }
             }
 
-            return new VarDeclaration(vars,type,assignments);
+            return new VarDeclaration(line,vars,type,assignments);
         }
         else
             return null;

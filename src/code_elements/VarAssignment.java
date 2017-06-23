@@ -18,7 +18,8 @@ public class VarAssignment extends Statement {
     private String valName;//name of the value.
 
     static String LineRegex = WHITESPACE+ASSIGNMENT+LINE_END;
-    public VarAssignment(String varName, String valName) {
+    protected VarAssignment(String line,String varName, String valName) {
+        super(line);
         this.varName = varName;
         this.valName = valName;
     }
@@ -31,7 +32,7 @@ public class VarAssignment extends Statement {
             //the ASSIGNMENT regex is devided readily to 2 groups.
             String varName = m.group(1);
             String valName = m.group(2);
-            return new VarAssignment(varName,valName);
+            return new VarAssignment(line,varName,valName);
         }
 
         return null;//if there was no match..

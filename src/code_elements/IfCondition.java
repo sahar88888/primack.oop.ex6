@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static oop.Custom_Regexes.CheckMatch;
+
 /**
  * Created by t8417719 on 12/06/2017.
  */
@@ -20,7 +22,7 @@ public class IfCondition extends Condition {
 
     static IfCondition createFromLine(BufferedReader f, String line)  throws
             IOException, BadElementException {
-        if(CodeElement.check_match(line,CREATE_REGEX)){
+        if(CheckMatch(line,CREATE_REGEX)){
             return new IfCondition(f, line);
         }
         else return null;
