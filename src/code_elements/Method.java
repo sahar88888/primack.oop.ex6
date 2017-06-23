@@ -1,13 +1,15 @@
 package code_elements;
 
 import code_elements.variables.Variable;
-import oop.Custom_Regexes;
+import oop.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static oop.Custom_Regexes.*;
+
 
 /**
  * Created by t8417719 on 12/06/2017.
@@ -16,8 +18,7 @@ public class Method extends Block {
 
     String line;
     ArrayList<Variable.VarType> paramTypes;
-    static String PARAM_REGEX = Custom_Regexes.VAR_TYPE+Custom_Regexes
-            .WHITESPACE+Custom_Regexes.VAR_NAME+Custom_Regexes.WHITESPACE;
+    static String PARAM_REGEX = VAR_TYPE+ WHITESPACE+VAR_NAME+P_WHITESPACE;
     String name;
     protected Method(BufferedReader f, String line) throws IOException,
             BadElementException{
@@ -28,7 +29,7 @@ public class Method extends Block {
 
     static Method createFromLine(BufferedReader f, String line)  throws
             IOException, BadElementException{
-        if(CodeElement.check_match(line,Custom_Regexes.METHOD_DECLARATION)){
+        if(CodeElement.check_match(line,METHOD_DECLARATION)){
             return new Method(f, line);
         }
         else return null;
@@ -47,12 +48,14 @@ public class Method extends Block {
         super.is_legal(scope_vars);
         String parameters = ((this.definition_line.split("\\)")[0]).split
                 ("\\(")[1]);
-        this.name = this.definition_line.split(Custom_Regexes.WHITESPACE)[1];
+
+        this.name = this.definition_line.split(WHITESPACE)[1];
         Pattern p = Pattern.compile(PARAM_REGEX);
         Matcher m = p.matcher(parameters);
+
         while(m.find()){
             String sub = parameters.substring(m.start(),m.end());
-            String varname = sub.split(Custom_Regexes.WHITESPACE)[1];
+            String varname = sub.split(WHITESPACE)[1];
             overrideVarByName(varname,scope_vars);
             // add parameters as variables
             VarDeclaration var_dec = VarDeclaration.createFromLine(sub);

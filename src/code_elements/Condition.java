@@ -40,11 +40,12 @@ public abstract class Condition extends Block {
     }
 
     @Override
-    public void is_legal(ArrayList<Variable> scope_vars) throws
-            BadElementException {
+    public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
         super.is_legal(scope_vars);
+
         String[] statements = ((this.definition_line.split("\\)")[0]).split
                 ("\\(")[1]).split("logical operators");
+
         for(String statement : statements){
             boolean valid = false;
             if(CodeElement.check_match(statement,Custom_Regexes.LOGICAL_VALUE)){

@@ -48,6 +48,7 @@ public class MethodCall extends Statement {
                         throw new BadElementException();
                     }
                 }
+
                 if (!(Custom_Regexes.GetValueTypeFromName(param) == method
                         .getParamType(i))){
                     throw new BadElementException();

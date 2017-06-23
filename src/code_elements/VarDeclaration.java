@@ -46,8 +46,10 @@ public class VarDeclaration extends Statement {
             p = Pattern.compile(VAR_TYPE);
             m = p.matcher(line);//searching for the type
             m.find();
+
             String type_str = Cut(line,m);
             VarType type = GetValueTypeFromName(type_str);
+
             //cutting the line to a smaller one containing only the variables and assignments
             line = line.substring(m.start(),line.length()-1);
 
@@ -57,7 +59,7 @@ public class VarDeclaration extends Statement {
             {
                 String[] var_parts = part.split("=");//splitting a part to a var name and perhaps assigned value.
                 String var_string = Find(VAR_NAME,var_parts[0]);
-                vars.add(new Variable(var_string,type));
+                vars.add(new Variable(var_string,type_str));
 
                 if(var_parts.length>1) {//if there's a value assignment:
                     String val_string = Find(VAL,var_parts[1]);
@@ -76,7 +78,16 @@ public class VarDeclaration extends Statement {
         return vars;
     }
 
+    @Override
+    public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
+        return;
+    }
+
     public VarType getType() {
         return type;
+    }
+
+    public ArrayList<VarAssignment> getAssignments() {
+        return assignments;
     }
 }

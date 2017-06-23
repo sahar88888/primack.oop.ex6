@@ -12,9 +12,11 @@ import static code_elements.variables.Variable.VarType.*;
  * A library of  custom regexes for our use.
  */
  public class Custom_Regexes {
-    public static String WHITESPACE = "\\s*";
-    public static String VAR_TYPE = "(final)?"+WHITESPACE+"(int|double|String|boolean|char)";
-    public static String VAR_NAME = "[a-zA-Z_][\\w]*";// a pattern for a var name. (e.g. A1, _Zorg_42).
+    public static String WHITESPACE = "\\s+";
+    public static String P_WHITESPACE= "\\s*"; //stands for possible whitespace.
+    public static String VAR_TYPE = "(final)? "+WHITESPACE+"(int|double|String|boolean|char)";
+    public static String VAR_NAME = "_?[a-zA-Z_][\\w]*";// a pattern for a var name. (e.g. A1, _Zorg_42).
+    public static String VAR_DEClARATION = "("+VAR_TYPE+")"+WHITESPACE+"("+VAR_NAME+")";
     public static String METHOD_NAME = "[a-zA-Z][\\w]*";// a pattern for a name. (e.g. A1, print_files
 
 
@@ -31,7 +33,15 @@ import static code_elements.variables.Variable.VarType.*;
     public static String ASSIGNMENT = "("+VAR_NAME+")"+WHITESPACE+"="+WHITESPACE+"("+VAL+")";
     public static String NAME_OR_ASSIGNMENT = "["+VAR_NAME+"|"+ASSIGNMENT+"]";
     public static String LINE_END = WHITESPACE+";"+WHITESPACE;
+
+    public static String CONDITION_NAME = "if|while";
     public static String BOOLEAN_OPERATOR = "[\\|\\| | \\&\\&]";//string for boolean operator.
+
+    public static String METHOD_DECLARATION= "void" + WHITESPACE +
+            METHOD_NAME + "\\(("+ WHITESPACE + VAR_TYPE + WHITESPACE + VAR_NAME+")" +
+            "*)\\)" + WHITESPACE+"\\{";
+    public static String METHOD_CALL = METHOD_NAME + "\\((" +
+            "("+WHITESPACE+VAR_NAME+WHITESPACE+")*\\);";
 
 
    /**
@@ -46,7 +56,7 @@ import static code_elements.variables.Variable.VarType.*;
     }
 
     /**
-     * a g
+     * a function for getting the type of its value from a name.
      * @param valString: the string representing the value.
      * @return the matching type.
      * @throws BadElementException if no type was matched - illegal value.
@@ -99,4 +109,6 @@ import static code_elements.variables.Variable.VarType.*;
         m.find();
         return Cut(string,m);
     }
+
+
 }

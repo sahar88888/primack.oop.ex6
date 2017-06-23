@@ -5,7 +5,7 @@ package code_elements;
  */
 public class Empty extends NoCode {
 
-    static String CREATE_REGEX = "\\s";
+    static String CREATE_REGEX = "\\s*";
 
     static public Empty createFromLine(String line){
         if(CodeElement.check_match(line,CREATE_REGEX)){

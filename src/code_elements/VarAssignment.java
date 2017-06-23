@@ -44,7 +44,7 @@ public class VarAssignment extends Statement {
      */
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException
     {
-        Variable var =find_var_by_string(scope_vars,varName);
+        Variable var =find_var_by_string(scope_vars,varName); //getting the matching variable from the scope.
 
         String value;// the value to be assigned.
         if(valName.matches(VAL))//if a value is trying to be assigned.

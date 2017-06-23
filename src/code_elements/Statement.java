@@ -15,7 +15,7 @@ public abstract class Statement extends CodeElement {
         if(CodeElement.check_match(line,CREATE_REGEX)){
             if ((elem = VarDeclaration.createFromLine(line)) == null) {
                 if ((elem = VarAssignment.createFromLine(line)) == null) {
-                    elem = MethodCall.createFromLine(line);
+                    elem = MethodCall.createFromLine(f, line);
                 }
             }
             return elem;
