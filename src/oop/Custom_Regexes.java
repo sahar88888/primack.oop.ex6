@@ -22,21 +22,21 @@ import static code_elements.variables.Variable.VarType.*;
 
 
     // strings for variable values:
-    public static String INT_VAL = "-?[\\d]*";
-    public static String DOUBLE_VAL = INT_VAL+"\\.?"+"[\\d]*";
+    public static String INT_VAL = "-?[\\d]+";
+    public static String DOUBLE_VAL = INT_VAL+"(\\.[\\d]+)?";
     public static String STRING_VAL = "\"\\.*\"";
-    public static String BOOLEAN_VAL = "true|false|"+DOUBLE_VAL;
+    public static String BOOLEAN_VAL = "(true|false|"+DOUBLE_VAL+")";
     public static String CHAR_VAL = "'\\.'";
 
-    public static String VAL = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL;//general value.
-    public static String LOGICAL_VALUE = INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL;//checkable value.
+    public static String VAL = "("+INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL+")";//general value.
+    public static String LOGICAL_VALUE = "("+INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+")";//checkable value.
 
     public static String ASSIGNMENT = "("+VAR_NAME+")"+WHITESPACE+"="+WHITESPACE+"("+VAL+")";
-    public static String NAME_OR_ASSIGNMENT = "["+VAR_NAME+"|"+ASSIGNMENT+"]";
+    public static String NAME_OR_ASSIGNMENT = "("+VAR_NAME+"|"+ASSIGNMENT+")";
     public static String LINE_END = WHITESPACE+";"+WHITESPACE;
 
-    public static String CONDITION_NAME = "if|while";
-    public static String BOOLEAN_OPERATOR = "[\\|\\| | \\&\\&]";//string for boolean operator.
+    public static String CONDITION_NAME = "(if|while)";
+    public static String BOOLEAN_OPERATOR = "(\\|\\| | \\&\\&)";//string for boolean operator.
 
     public static String METHOD_DECLARATION= "void" + WHITESPACE +
             METHOD_NAME + "\\(("+ WHITESPACE + VAR_TYPE + WHITESPACE + VAR_NAME+")" +
@@ -130,6 +130,24 @@ import static code_elements.variables.Variable.VarType.*;
             substr.add(line.substring(m.start(),m.end()));
         }
         return substr;
+    }
+
+    public static String ExampleString(VarType type)
+    {
+        switch (type) {
+            case BOOLEAN:
+                return "true";
+            case INT:
+                return "8";
+            case DOUBLE:
+                return "8.1";
+            case STRING:
+                return "\"hi\"";
+            case CHAR:
+                return "'h'";
+            default:
+                return null;
+        }
     }
 
 

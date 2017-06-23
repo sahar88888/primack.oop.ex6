@@ -17,8 +17,14 @@ public class Variable {
     private String name;
     private String value;
     private VarType type;
-    boolean is_final = false;
-    boolean initialized = false;
+    private boolean is_final = false;
+    private boolean initialized = false;
+
+    /**
+     * an attribute tightly tied to the final attribute: a final variable will be locked after the line in which it was
+     * declared was fully processed.
+     */
+    private boolean locked = false;
 
     public Variable(String name, String type_String) throws BadElementException {
         this.name = name;
@@ -71,14 +77,28 @@ public class Variable {
     {
         this.initialized=true;
 
-        if(is_final())
-            throw new BadElementException();//final variables can't be assigned!
+        if(locked)
+            throw new BadElementException("assigning value to final var");
 
         if (!value.matches(GetRegexFromVarType(type)))
-            throw new BadElementException();// type not matching.
+            throw new BadElementException("value assigned doesn't match variable type.");// type not matching.
 
         this.value = value;
 
+    }
+
+    public void assign(Variable other_var) throws BadElementException
+    {
+        this.initialized=true;
+
+        if(locked)
+            throw new BadElementException("assigning value to final var");
+
+        String other_type_example = ExampleString(other_var.getType());
+        if (!other_type_example.matches(GetRegexFromVarType(this.type)))
+            throw new BadElementException("value assigned doesn't match variable type.");// type not matching.
+
+        this.value = other_var.getValue();
     }
 
     public String getValue() throws BadElementException {
@@ -98,10 +118,21 @@ public class Variable {
         return new Variable(this);
     }
 
-    public boolean isBoolean(){
-        if(type==VarType.BOOLEAN || type==VarType.DOUBLE || type==VarType.INT){
-            return true;
+    /**
+     * 'locking' a variable if it's final - will be effective after the variable is declared.
+     * @throws BadElementException
+     */
+    public void Lock() throws BadElementException
+    {
+        if (is_final())
+        {
+            if (!initialized)
+                throw new BadElementException("Uninitialized final element");
+
+            this.locked=true;
         }
-        return false;
     }
+
+
+
 }

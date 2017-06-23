@@ -13,9 +13,10 @@ import static oop.Custom_Regexes.*;
  */
 public abstract class Condition extends Block {
 
-    static public String CREATE_REGEX = "blablabla"; //TODO fix
-    static Variable.VarType[] boolTypes = new Variable.VarType[]{Variable.VarType.INT,
-            Variable.VarType.BOOLEAN, Variable.VarType.DOUBLE};
+    static public String BOOLEAN_UNIT = WHITESPACE +"("+VAR_NAME+"|"+BOOLEAN_VAL+")";
+    static public String BOOLEAN_EXPRESSION = "("+BOOLEAN_UNIT+BOOLEAN_OPERATOR+")*"+BOOLEAN_UNIT;
+    static public String CREATE_REGEX = CONDITION_NAME+"\\("+BOOLEAN_EXPRESSION+"\\)"+WHITESPACE;
+
 
     protected Condition(BufferedReader f, String def_line) throws
             IOException, BadElementException{
@@ -26,8 +27,7 @@ public abstract class Condition extends Block {
             BadElementException, IOException{
         Condition elem = null;
         if(CheckMatch(line, CREATE_REGEX)) {
-            if ((elem = IfCondition.createFromLine(f, line))  ==
-                    null) {
+            if ((elem = IfCondition.createFromLine(f, line))  ==  null) {
                 elem = WhileCondition.createFromLine(f, line);
             }
         }
@@ -43,22 +43,12 @@ public abstract class Condition extends Block {
 
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
-        for(String statement : GetSubStrings(def_line, VAL)){
-            boolean valid = false;
-            if(CheckMatch(statement,LOGICAL_VALUE)){
-                valid = true;
-            }
-            else if(CheckMatch(statement, Custom_Regexes
-                    .VAR_NAME)){
-                //this is a variable name, and we need to check if it exists
-                // within scope.
-                Variable v = find_var_by_string(scope_vars, statement);
-                if(v.isBoolean()){
-                    valid = true;
-                }
-            }
-            if(!valid){
-                throw new BadElementException();
+        for(String statement : GetSubStrings(def_line, VAL)) {
+            if (statement.matches(VAR_NAME))//there can only be a problem if the value is a variable name..
+            {
+                Variable var = find_var_by_string(scope_vars,statement);
+                if(!var.getValue().matches(BOOLEAN_VAL))
+                    throw new BadElementException("variable in condition isn't boolean.");
             }
         }
         super.is_legal(scope_vars);
