@@ -60,20 +60,5 @@ public class VarAssignment extends Statement {
 
     }
 
-    /**
-     * findindg a variable with a given variable name, in a list of variables.
-     * @param variables
-     * @param varName
-     * @return
-     * @throws BadElementException if the variable was not found.
-     */
-    static Variable find_var_by_string(ArrayList<Variable> variables, String varName) throws BadElementException
-    {
-        for (Variable var : variables)
-        {
-            if (var.getName().equals(varName))
-                return var;
-        }
-        throw new BadElementException();//if the variable wasn't found..
-    }
+
 }

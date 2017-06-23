@@ -37,16 +37,7 @@ public abstract class CodeElement {
         return elem;
     }
 
-    /**
-     * @param line string to check.
-     * @param regex regex to match.
-     * @return whether the whole string matches the regex.
-     */
-    static boolean check_match(String line, String regex){
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(line);
-        return m.matches();
-    }
+
 
 
     /**
@@ -63,5 +54,22 @@ public abstract class CodeElement {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * finding a variable with a given variable name, in a list of variables.
+     * @param variables
+     * @param varName
+     * @return
+     * @throws BadElementException if the variable was not found.
+     */
+    static Variable find_var_by_string(ArrayList<Variable> variables, String varName) throws BadElementException
+    {
+        for (Variable var : variables)
+        {
+            if (var.getName().equals(varName))
+                return var;
+        }
+        throw new BadElementException();//if the variable wasn't found..
     }
 }

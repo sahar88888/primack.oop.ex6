@@ -1,8 +1,7 @@
 package code_elements;
 
 import code_elements.variables.Variable;
-import oop.ex6.main.Program;
-
+import oop.Custom_Regexes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public abstract class Block extends CodeElement {
 
             IOException, BadElementException{
         Block elem = null;
-        if(CodeElement.check_match(line,CREATE_REGEX)) {
+        if((line,CREATE_REGEX)) {
             if ((elem = Method.createFromLine(f, line)) == null) {
                 elem = Condition.createFromLine(f, line);
             }
@@ -71,8 +70,8 @@ public abstract class Block extends CodeElement {
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
-        Copy_vars(scope_vars);//copying the vers in the upper scope.
 
+        Copy_vars(scope_vars);//copying the vers in the upper scope.
         for(CodeElement e : elements){
 
             if(e instanceof VarDeclaration){ //declaration

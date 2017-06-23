@@ -1,5 +1,6 @@
 package oop;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,6 +110,29 @@ import static code_elements.variables.Variable.VarType.*;
         m.find();
         return Cut(string,m);
     }
+
+    /**
+     * @param line string to check.
+     * @param regex regex to match.
+     * @return whether the whole string matches the regex.
+     */
+    public static boolean CheckMatch(String line, String regex){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(line);
+        return m.matches();
+    }
+
+    public static ArrayList<String> GetSubStrings(String line, String regex){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(line);
+        ArrayList<String> substr = new ArrayList<>();
+        while(m.find()){
+            substr.add(line.substring(m.start(),m.end()));
+        }
+        return substr;
+    }
+
+
 
 
 }
