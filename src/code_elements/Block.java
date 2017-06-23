@@ -26,7 +26,7 @@ public abstract class Block extends CodeElement {
         String line;
         elements = new ArrayList<>();
         while((line=f.readLine())!=null){
-            if(check_match(line,END_REGEX)){
+            if(check_match(line,END_REGEX)){ //skipping all lines until end
                 break;
             }
             else{
@@ -70,11 +70,14 @@ public abstract class Block extends CodeElement {
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
+        Copy_vars(scope_vars);//copying the vers in the upper scope.
+
         for(Variable v2: scope_vars){
             local_vars.add(v2);
         }
         for(CodeElement e : elements){
-            if(e instanceof VarDeclaration){
+
+            if(e instanceof VarDeclaration){ //declaration
                 for(Variable v : ((VarDeclaration) e).getVars()){
                     overrideVarByName(v.getName(),scope_vars);
                 }
