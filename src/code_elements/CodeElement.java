@@ -1,15 +1,13 @@
 package code_elements;
 
 import code_elements.variables.Variable;
-
-import javax.swing.plaf.nimbus.State;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static oop.Custom_Regexes.GetValueTypeFromName;
+import static oop.Custom_Regexes.VAL;
+import static oop.Custom_Regexes.VAR_NAME;
 
 /**
  * Created by t8417719 on 12/06/2017.
@@ -50,12 +48,13 @@ public abstract class CodeElement {
     public abstract void is_legal(ArrayList<Variable> scope_vars) throws
             BadElementException;
 
-    protected boolean varExists(String name, ArrayList<Variable> vars){
+    protected static Variable findVarByName(String name, ArrayList<Variable>
+            vars){
         for(Variable v : vars){
             if(v.getName().equals(name))
-                return true;
+                return v;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -72,5 +71,19 @@ public abstract class CodeElement {
                 return var;
         }
         throw new BadElementException();//if the variable wasn't found..
+    }
+
+    protected static Variable.VarType getExpressionType(String expr,
+                    ArrayList<Variable> scope_vars) throws BadElementException{
+        if(expr.matches(VAR_NAME)){
+            Variable v = findVarByName(expr,scope_vars);
+            if(v!=null && v.isInitialized()){
+                return v.getType();
+            }
+        }
+        else if(expr.matches(VAL)){
+            return GetValueTypeFromName(expr);
+        }
+        throw new BadElementException();
     }
 }
