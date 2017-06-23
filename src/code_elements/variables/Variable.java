@@ -18,7 +18,7 @@ public class Variable {
     private String value;
     private VarType type;
     boolean is_final = false;
-    boolean initialized;
+    boolean initialized = false;
 
     public Variable(String name, String type_String) throws BadElementException {
         this.name = name;
@@ -32,15 +32,17 @@ public class Variable {
     }
 
     /**
-     *
-     * @param var creating a variable
+     *creating a variable from a given one.
+     * @param other creating a variable
      * @throws BadElementException
      */
-    public Variable( Variable var) throws BadElementException
+    public Variable( Variable other) throws BadElementException
     {
-        this.name = var.getName();
-        this.type = var.getType();
-        this.value = var.getValue();
+        this.name = other.getName();
+        this.type = other.getType();
+        this.value = other.getValue();
+        this.is_final = other.is_final();
+        this.initialized = other.isInitialized();
 
     }
 
