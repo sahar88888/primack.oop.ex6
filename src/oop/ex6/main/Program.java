@@ -1,9 +1,7 @@
 package oop.ex6.main;
 import code_elements.*;
-import code_elements.variables.Variable;
-import com.sun.org.apache.bcel.internal.classfile.Code;
+import code_elements.Variable;
 
-import javax.xml.bind.Element;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;

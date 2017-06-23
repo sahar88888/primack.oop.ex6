@@ -1,7 +1,6 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-import code_elements.variables.Variable.*;
+import code_elements.Variable.*;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

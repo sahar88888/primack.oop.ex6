@@ -1,7 +1,5 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-import oop.Custom_Regexes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;

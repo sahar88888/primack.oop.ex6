@@ -1,13 +1,9 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-import oop.*;
-import oop.Custom_Regexes;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import static oop.Custom_Regexes.*;
 
 

@@ -5,9 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import code_elements.BadElementException;
-import code_elements.variables.Variable.VarType;
+import code_elements.Variable.VarType;
 
-import static code_elements.variables.Variable.VarType.*;
+import static code_elements.Variable.VarType.*;
 
 /**
  * A library of  custom regexes for our use.

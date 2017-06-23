@@ -1,7 +1,5 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-import oop.Custom_Regexes;
 import oop.ex6.main.Program;
 
 import java.io.BufferedReader;

@@ -1,7 +1,5 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-
 import java.util.ArrayList;
 
 /**

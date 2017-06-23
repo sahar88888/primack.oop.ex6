@@ -1,7 +1,4 @@
-package code_elements.variables;
-
-import code_elements.BadElementException;
-import code_elements.CodeElement;
+package code_elements;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

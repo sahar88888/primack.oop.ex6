@@ -1,10 +1,7 @@
 package code_elements;
 
-import code_elements.variables.Variable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static oop.Custom_Regexes.CheckMatch;
 
