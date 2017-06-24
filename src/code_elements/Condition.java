@@ -41,7 +41,9 @@ public abstract class Condition extends Block {
 
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
-        for(String statement : GetSubStrings(def_line, VAL)) {
+        String trimmed_line = RemoveString(CONDITION_NAME,def_line);//the line without the condition name.
+
+        for(String statement : GetSubStrings(def_line, BOOLEAN_UNIT)) {
             if (statement.matches(VAR_NAME))//there can only be a problem if the value is a variable name..
             {
                 Variable var = find_var_by_string(scope_vars,statement);
