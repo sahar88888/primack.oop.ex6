@@ -15,7 +15,7 @@ import  static oop.Custom_Regexes.*;
  */
 public class VarDeclaration extends Statement {
     static String Split_Str = ",";
-    static String CREATE_REGEX =  P_WHITESPACE + "" +
+    static String CREATE_REGEX =  P_WHITESPACE +
             "("+VAR_TYPE+WHITESPACE+
             "("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
             +NAME_OR_ASSIGNMENT+WHITESPACE +")"+LINE_END;
