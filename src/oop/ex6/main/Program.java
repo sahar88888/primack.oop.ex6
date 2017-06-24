@@ -50,11 +50,12 @@ public class Program extends Block {
 
         }
         for(CodeElement e : elements){
-            e.is_legal(scope_vars);
+            e.is_legal(local_vars);
         }
     }
 
     public static ArrayList<Method> getMethods(){
         return methods;
     }
+
 }

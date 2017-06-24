@@ -14,11 +14,13 @@ public class Method extends Block {
 
     String line;
     ArrayList<Variable.VarType> paramTypes;
-    static String PARAM_REGEX = VAR_TYPE+ WHITESPACE+VAR_NAME+P_WHITESPACE;
     String name;
     protected Method(BufferedReader f, String line) throws IOException,
             BadElementException{
         super(f,line);
+        if(!(elements.get(elements.size()-1) instanceof Return)){
+            throw new BadElementException();
+        }
         this.line = line;
         paramTypes = new ArrayList<>();
     }
@@ -41,7 +43,6 @@ public class Method extends Block {
 
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
-
         for(String sub : GetSubStrings(line,PARAM_REGEX)){
             String varname = sub.split(WHITESPACE)[1] + ";";
             // add parameters as variables

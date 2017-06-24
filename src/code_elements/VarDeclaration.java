@@ -14,11 +14,11 @@ import  static oop.Custom_Regexes.*;
  * Created by t8417719 on 12/06/2017.
  */
 public class VarDeclaration extends Statement {
-
-    static String Line_Regex= "("+VAR_TYPE+"[\\s]+("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
-            +NAME_OR_ASSIGNMENT+WHITESPACE +")"+LINE_END;
     static String Split_Str = ",";
-
+    static String CREATE_REGEX =  P_WHITESPACE + "" +
+            "("+VAR_TYPE+WHITESPACE+
+            "("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
+            +NAME_OR_ASSIGNMENT+WHITESPACE +")"+LINE_END;
     private ArrayList<Variable> vars;//list of variables declared
     private ArrayList<VarAssignment> assignments;//a list of assignments made during declaration.
     private VarType type; //
@@ -33,7 +33,7 @@ public class VarDeclaration extends Statement {
     }
 
     static VarDeclaration createFromLine(String line) throws BadElementException{
-        Pattern p = Pattern.compile(Line_Regex);
+        Pattern p = Pattern.compile(CREATE_REGEX);
         Matcher m = p.matcher(line);
 
         if (m.matches())

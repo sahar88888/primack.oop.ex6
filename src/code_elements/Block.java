@@ -5,14 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static oop.Custom_Regexes.CheckMatch;
+import static oop.Custom_Regexes.P_WHITESPACE;
 
 /**
  * Created by t8417719 on 12/06/2017.
  */
 public abstract class Block extends CodeElement {
 
-    static String CREATE_REGEX = ".*\\{";
-    static String END_REGEX = "\\}";
+    static String CREATE_REGEX = ".*\\{" + P_WHITESPACE;
+    static String END_REGEX = "\\}" + P_WHITESPACE;
 
     protected ArrayList<CodeElement> elements;
     protected ArrayList<Variable> local_vars;
@@ -69,10 +70,8 @@ public abstract class Block extends CodeElement {
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
-
         Copy_vars(scope_vars);//copying the vers in the upper scope.
         for(CodeElement e : elements){
-
             if(e instanceof VarDeclaration){ //declaration
                 for(Variable v : ((VarDeclaration) e).getVars()){
                     overrideVarByName(v.getName(),scope_vars);
