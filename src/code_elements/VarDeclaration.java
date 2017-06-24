@@ -48,7 +48,7 @@ public class VarDeclaration extends Statement {
             m.find();
 
             String type_str = Cut(line,m);
-            VarType type = GetValueTypeFromTypeName(type_str);
+            VarType type = GetValueTypeFromTypeName(m.group(5));
 
             //cutting the line to a smaller one containing only the variables and assignments
             line = line.substring(m.end(),line.length());
@@ -81,7 +81,19 @@ public class VarDeclaration extends Statement {
 
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
-        return;
+
+        for(Variable var: getVars())
+        {
+            for (Variable scope_var: scope_vars)
+                if(var.getName().equals(scope_var.getName()))
+                    throw new BadElementException("two elements with the same name in the same scope");
+        }
+
+        for(VarAssignment assign:getAssignments())//making all assignments.
+            assign.is_legal(scope_vars);
+
+        for (Variable v:getVars()) //locking all variables in here
+            v.Lock();
     }
 
     public VarType getType() {

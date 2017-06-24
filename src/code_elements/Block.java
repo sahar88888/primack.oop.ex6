@@ -82,16 +82,19 @@ public abstract class Block extends CodeElement {
     }
 
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException{
-        Copy_vars(scope_vars);//copying the vers in the upper scope.
+        Copy_vars(scope_vars);//copying the vars in the upper scope.
+
         for(CodeElement e : elements){
+
             if(e instanceof VarDeclaration){ //declaration
                 VarDeclaration declaration = (VarDeclaration)e;
                 for(Variable v : declaration.getVars()){
                     overrideVarByName(v.getName(),scope_vars);
                 }
-
             }
+
             e.is_legal(local_vars);
+
             if(e instanceof VarDeclaration){
                 for(Variable v : ((VarDeclaration) e).getVars()){
                     local_vars.add(v);

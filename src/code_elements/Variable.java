@@ -29,9 +29,9 @@ public class Variable {
         Pattern p = Pattern.compile(VAR_TYPE);
         Matcher m = p.matcher(type_String);
         m.matches();
-        if (m.group(1) != null)//first group contains possibly 'final' modifier
+        if (m.group(2) != null)//first group contains possibly 'final' modifier
             this.is_final = true;
-        this.type = GetValueTypeFromTypeName(type_String);
+        this.type = GetValueTypeFromTypeName(m.group(5));
     }
 
     /**

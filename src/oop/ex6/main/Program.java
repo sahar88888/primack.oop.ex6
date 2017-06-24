@@ -39,6 +39,7 @@ public class Program extends Block {
             CodeElement e = elements.get(i);
             if (e instanceof VarDeclaration) {
                 e.is_legal(local_vars);
+
                 for (Variable v : ((VarDeclaration) e).getVars()) {
                     local_vars.add(v);
                 }

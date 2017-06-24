@@ -13,8 +13,12 @@ public class tester {
     static String regex2 = P_WHITESPACE + VAR_TYPE+WHITESPACE+NAME_OR_ASSIGNMENT;
 
     public static void main(String[] args) {
-        System.out.println("int a;".matches(CREATE_REGEX));
-        System.out.println("Hello".substring(0,4));
+
+        String line ="final int bla";
+        Pattern p = Pattern.compile(VAR_TYPE);
+        Matcher m = p.matcher(line);//searching for the type
+        m.find();
+        System.out.println(m.group(2));
     }
 
 
