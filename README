@@ -1,0 +1,72 @@
+ravehshulman
+saharprimack
+
+
+=============================
+=      File description     =
+=============================
+(filename for each file and a 2-3 rows description)
+DirectoryProcessor.java:
+The main class, in which we accept the input . It generates from the commandFile the different Sections,
+and then prints all files of each section, as wanted.
+
+Filters package:
+Filter.java:
+the "father class" of our filter subclasses. represents a basic filter, with the function of receiving a
+file and deciding whether it accepts it or not. (The way by which it is done, is implemented by the
+inheriting classes of the package Filters).
+
+<filter_name>_filter.java:
+the particular filter, filters files in a directory
+
+
+FilterFactory.java:
+A class that is capable of creating a filter by a given string which represents the filter attributes.
+
+Errors package:
+Error_type1.java:
+The error class for warnings after which the code keeps running
+
+ErrorType2.java:
+extends exception, a father class for all the type 2 errors(major errors that we dont continue when running into)
+
+<error_name>Error.java:
+extends Error_type2, is the exceptions that we wrote that the program can run into.
+
+FileWrapper.java:
+A wrapper class for java's File, to make some of the attributes we needed (such as file type) easier to
+obtain.
+
+Section.java:
+A class representing a section, which has a filter and an order string, and has a method for printing all
+files relevant to the section.
+
+Filegroup.java:
+Contains a group of files, which is created from all known files by a given filter, and then orders them
+with a given comparator. Each subclass of Filegroup has its on comparator, for sorting its files.
+
+<FilegroupName>_fileGroup.java:
+Extends Filegroup, holds a specific File comparator by which it sorts its lists.
+
+=============================
+=          Design           =
+=============================
+
+we wanted to go for maximum modularity here because we very easily could want to have another filter,
+therefore we made sure to keep everything modular.
+all filters seperate but the same type, same for exceptions(errors.)
+
+=============================
+=  Implementation details   =
+=============================
+2 example regexes:
+
+=============================
+=    Answers to questions   =
+=============================
+we had the exceptions extend a father exception class errortype2, and that way they all could be handled the same.
+
+we wrapped the files in a file wrapper to allow us to give them attributes we wanted, and to hold on to their information.
+
+We sorted the files by giving each type group a Comparator that compares according to the desired arrtibute,
+(size,type or abs), and than used java's built-in functions for sorting collections with a given comparator.
