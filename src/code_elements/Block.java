@@ -85,9 +85,11 @@ public abstract class Block extends CodeElement {
         Copy_vars(scope_vars);//copying the vers in the upper scope.
         for(CodeElement e : elements){
             if(e instanceof VarDeclaration){ //declaration
-                for(Variable v : ((VarDeclaration) e).getVars()){
+                VarDeclaration declaration = (VarDeclaration)e;
+                for(Variable v : declaration.getVars()){
                     overrideVarByName(v.getName(),scope_vars);
                 }
+
             }
             e.is_legal(local_vars);
             if(e instanceof VarDeclaration){
