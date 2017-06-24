@@ -34,6 +34,7 @@ public abstract class Sjavac {
             System.out.println(ILLEGAL);
         }
         catch(Exception e){
+            e.printStackTrace();
             System.err.println(e.getMessage());
             System.out.println(ERROR);
         }

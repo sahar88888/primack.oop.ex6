@@ -3,6 +3,7 @@ package code_elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static oop.Custom_Regexes.CheckMatch;
 import static oop.Custom_Regexes.P_WHITESPACE;
@@ -13,7 +14,7 @@ import static oop.Custom_Regexes.P_WHITESPACE;
 public abstract class Block extends CodeElement {
 
     static String CREATE_REGEX = ".*\\{" + P_WHITESPACE;
-    static String END_REGEX = "\\}" + P_WHITESPACE;
+    protected String END_REGEX;
 
     protected ArrayList<CodeElement> elements;
     protected ArrayList<Variable> local_vars;
@@ -21,13 +22,14 @@ public abstract class Block extends CodeElement {
     protected Block(BufferedReader f, String def_line) throws IOException,
             BadElementException{
         super(def_line);
+        this.set_End_Regex();
         local_vars = new ArrayList<>();
         String line;
         elements = new ArrayList<>();
 
         while((line=f.readLine())!=null){
 
-            if(CheckMatch(line,END_REGEX)){ //skipping all lines until end
+            if(Objects.equals(line, this.END_REGEX)){ //skipping all lines until end
                 break;
             }
 
@@ -39,13 +41,20 @@ public abstract class Block extends CodeElement {
                 elements.add(elem);
             }
         }
-        if(line==null){
-            throw new BadElementException();
+        if(!Objects.equals(line, this.END_REGEX)){ //if the end wasn't the expected closing line.
+            throw new BadElementException("matching closing line not found.");
         }
         for(CodeElement e : elements) {
             // validate that there are only fitting elements inside the block (e.g. a method can't contain methods.)
             checkElementType(e);
         }
+    }
+
+    /**
+     * A method for setting the regex ending the block. by default a "}", but Program overrides it with null.
+     */
+    protected void set_End_Regex() {
+        this.END_REGEX = "\\}" + P_WHITESPACE;
     }
 
     protected abstract void checkElementType(CodeElement e) throws BadElementException;

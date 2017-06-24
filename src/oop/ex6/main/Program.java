@@ -15,6 +15,12 @@ public class Program extends Block {
 
     public Program(BufferedReader f) throws IOException, BadElementException{
         super(f, "");
+        this.END_REGEX = null;//programs end with last line.
+    }
+
+    @Override
+    protected void set_End_Regex() {
+        this.END_REGEX = null;
     }
 
     @Override

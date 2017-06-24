@@ -52,7 +52,7 @@ public class VarDeclaration extends Statement {
             VarType type = GetValueTypeFromTypeName(type_str);
 
             //cutting the line to a smaller one containing only the variables and assignments
-            line = line.substring(m.end(),line.length()-1);
+            line = line.substring(m.end(),line.length());
 
             String[] line_parts = line.split(Split_Str);
 

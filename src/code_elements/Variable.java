@@ -26,12 +26,12 @@ public class Variable {
     public Variable(String name, String type_String) throws BadElementException {
         this.name = name;
 
-        Pattern p = Pattern.compile(VAR_NAME);
+        Pattern p = Pattern.compile(VAR_TYPE);
         Matcher m = p.matcher(type_String);
         m.matches();
         if (m.group(1) != null)//first group contains possibly 'final' modifier
             this.is_final = true;
-        this.type = GetValueTypeFromValueName(type_String);
+        this.type = GetValueTypeFromTypeName(type_String);
     }
 
     /**
