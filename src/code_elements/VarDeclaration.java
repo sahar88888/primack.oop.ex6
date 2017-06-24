@@ -38,7 +38,6 @@ public class VarDeclaration extends Statement {
 
         if (m.matches())
         {
-            line = m.group(1);//cutting off the ';' and residual whitespaces.
             ArrayList<Variable> vars = new ArrayList<>();//list of variables.
             ArrayList<VarAssignment> assignments = new ArrayList<>();//list of assignments
 
