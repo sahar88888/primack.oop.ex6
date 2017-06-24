@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static oop.Custom_Regexes.GetValueTypeFromName;
+import static oop.Custom_Regexes.GetValueTypeFromValueName;
 import static oop.Custom_Regexes.VAL;
 import static oop.Custom_Regexes.VAR_NAME;
 
@@ -81,7 +81,7 @@ public abstract class CodeElement {
             }
         }
         else if(expr.matches(VAL)){
-            return GetValueTypeFromName(expr);
+            return GetValueTypeFromValueName(expr);
         }
         throw new BadElementException();
     }

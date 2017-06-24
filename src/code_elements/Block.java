@@ -24,10 +24,13 @@ public abstract class Block extends CodeElement {
         local_vars = new ArrayList<>();
         String line;
         elements = new ArrayList<>();
+
         while((line=f.readLine())!=null){
+
             if(CheckMatch(line,END_REGEX)){ //skipping all lines until end
                 break;
             }
+
             else{
                 CodeElement elem = CodeElement.createFromLine(f, line);
                 if(elem==null || elem instanceof Method){

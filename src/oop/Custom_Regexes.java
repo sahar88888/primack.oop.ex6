@@ -26,7 +26,7 @@ import static code_elements.Variable.VarType.*;
     public static String WHITESPACE = "\\s+";
     public static String P_WHITESPACE= "\\s*"; //stands for possible whitespace.
 
-    public static String LINE_END = WHITESPACE+";"+WHITESPACE;
+    public static String LINE_END = P_WHITESPACE+";"+P_WHITESPACE;
 
     public static String VAR_TYPE = "(final"+WHITESPACE+")?"+P_WHITESPACE+
             "(int|double|String|boolean|char)";
@@ -66,7 +66,7 @@ import static code_elements.Variable.VarType.*;
      * @return the matching type.
      * @throws BadElementException if no type was matched - illegal value.
      */
-    public static VarType GetValueTypeFromName(String valString) throws BadElementException
+    public static VarType GetValueTypeFromValueName(String valString) throws BadElementException
     {
         if(valString.matches(INT_VAL))
             return INT;
@@ -81,6 +81,29 @@ import static code_elements.Variable.VarType.*;
 
         throw new BadElementException(); //no type was matched.
     }
+
+    /**
+     * a function for getting the type of its value from a name.
+     * @param TypeName: the string representing the value.
+     * @return the matching type.
+     * @throws BadElementException if no type was matched - illegal value.
+     */
+    public static VarType GetValueTypeFromTypeName(String TypeName) throws BadElementException
+    {
+        if(TypeName.equals("int"))
+            return INT;
+        if(TypeName.equals("double"))
+            return DOUBLE;
+        if(TypeName.equals("String"))
+            return STRING;
+        if(TypeName.equals("boolean"))
+            return BOOLEAN;
+        if(TypeName.equals("char"))
+            return CHAR;
+
+        throw new BadElementException(); //no type was matched.
+    }
+
 
     /**
      * getting the matching regex to a given VarType.
@@ -113,6 +136,21 @@ import static code_elements.Variable.VarType.*;
         Matcher m = p.matcher(string);
         m.find();
         return Cut(string,m);
+    }
+
+
+    /**
+     * removing the first substring from a given string that matches the given regex.
+     * @param regex the given regex
+     * @param string the given string/
+     * @return the string, when the wanted part is removes.
+     */
+    public static String RemoveString(String regex, String string)
+    {
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(string);
+        m.find();
+        return string.substring(0,m.start())+string.substring(m.end(),string.length()-1);
     }
 
     /**

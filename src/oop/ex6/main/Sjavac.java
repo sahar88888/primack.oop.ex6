@@ -29,12 +29,13 @@ public abstract class Sjavac {
             System.out.print(LEGAL);
         }
         catch(BadElementException e){
+            e.printStackTrace();
             System.err.println(e.getMessage());
-            System.out.print(ILLEGAL);
+            System.out.println(ILLEGAL);
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            System.out.print(ERROR);
+            System.out.println(ERROR);
         }
     }
 }

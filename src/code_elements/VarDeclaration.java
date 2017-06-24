@@ -16,9 +16,9 @@ import  static oop.Custom_Regexes.*;
 public class VarDeclaration extends Statement {
     static String Split_Str = ",";
     static String CREATE_REGEX =  P_WHITESPACE +
-            "("+VAR_TYPE+WHITESPACE+
+            "("+P_WHITESPACE+VAR_TYPE+WHITESPACE+
             "("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
-            +NAME_OR_ASSIGNMENT+WHITESPACE +")"+LINE_END;
+            +NAME_OR_ASSIGNMENT+P_WHITESPACE +")"+LINE_END;
     private ArrayList<Variable> vars;//list of variables declared
     private ArrayList<VarAssignment> assignments;//a list of assignments made during declaration.
     private VarType type; //
@@ -49,10 +49,10 @@ public class VarDeclaration extends Statement {
             m.find();
 
             String type_str = Cut(line,m);
-            VarType type = GetValueTypeFromName(type_str);
+            VarType type = GetValueTypeFromTypeName(type_str);
 
             //cutting the line to a smaller one containing only the variables and assignments
-            line = line.substring(m.start(),line.length()-1);
+            line = line.substring(m.end(),line.length()-1);
 
             String[] line_parts = line.split(Split_Str);
 

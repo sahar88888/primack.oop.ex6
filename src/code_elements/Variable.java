@@ -31,7 +31,7 @@ public class Variable {
         m.matches();
         if (m.group(1) != null)//first group contains possibly 'final' modifier
             this.is_final = true;
-        this.type = GetValueTypeFromName(type_String);
+        this.type = GetValueTypeFromValueName(type_String);
     }
 
     /**
