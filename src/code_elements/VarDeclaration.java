@@ -15,9 +15,8 @@ import  static oop.Custom_Regexes.*;
  */
 public class VarDeclaration extends Statement {
     static String Split_Str = ",";
-    static String CREATE_REGEX =  P_WHITESPACE +
-            "("+P_WHITESPACE+VAR_TYPE+WHITESPACE+
-            "("+NAME_OR_ASSIGNMENT+WHITESPACE+","+WHITESPACE+")*"
+    static String CREATE_REGEX =  P_WHITESPACE + VAR_TYPE +P_WHITESPACE+
+            "(("+NAME_OR_ASSIGNMENT+P_WHITESPACE+","+P_WHITESPACE+")*"
             +NAME_OR_ASSIGNMENT+P_WHITESPACE +")"+LINE_END;
     private ArrayList<Variable> vars;//list of variables declared
     private ArrayList<VarAssignment> assignments;//a list of assignments made during declaration.
@@ -62,7 +61,7 @@ public class VarDeclaration extends Statement {
                 vars.add(new Variable(var_string,type_str));
 
                 if(var_parts.length>1) {//if there's a value assignment:
-                    String val_string = Find(VAL,var_parts[1]);
+                    String val_string = Find(EXPRESSION,var_parts[1]);
                     VarAssignment assignment = new VarAssignment
                             (line,var_string,val_string);
                     assignments.add(assignment);
@@ -89,11 +88,7 @@ public class VarDeclaration extends Statement {
                     throw new BadElementException("two elements with the same name in the same scope");
         }
 
-        for(VarAssignment assign:getAssignments())//making all assignments.
-            assign.is_legal(scope_vars);
 
-        for (Variable v:getVars()) //locking all variables in here
-            v.Lock();
     }
 
     public VarType getType() {
@@ -102,5 +97,20 @@ public class VarDeclaration extends Statement {
 
     public ArrayList<VarAssignment> getAssignments() {
         return assignments;
+    }
+
+    /**
+     * function for activating all assignments in the declration, and locking all variables in it.
+     * (for the meaning of locking - see Variable).
+     * @param scope_vars
+     * @throws BadElementException
+     */
+    public void make_assignments(ArrayList<Variable> scope_vars) throws BadElementException
+    {
+        for(VarAssignment assign:getAssignments())//making all assignments.
+            assign.is_legal(scope_vars);
+
+        for (Variable v:getVars()) //locking all variables in here
+            v.Lock();
     }
 }

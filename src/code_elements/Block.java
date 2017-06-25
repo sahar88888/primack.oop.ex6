@@ -29,19 +29,19 @@ public abstract class Block extends CodeElement {
 
         while((line=f.readLine())!=null){
 
-            if(Objects.equals(line, this.END_REGEX)){ //skipping all lines until end
+            if(Strings_match(line, this.END_REGEX)){ //skipping all lines until end
                 break;
             }
 
             else{
                 CodeElement elem = CodeElement.createFromLine(f, line);
-                if(elem==null || elem instanceof Method){
+                if(elem==null){
                     throw new BadElementException();
                 }
                 elements.add(elem);
             }
         }
-        if(!Objects.equals(line, this.END_REGEX)){ //if the end wasn't the expected closing line.
+        if(!Strings_match(line, this.END_REGEX)){ //if the end wasn't the expected closing line.
             throw new BadElementException("matching closing line not found.");
         }
         for(CodeElement e : elements) {
@@ -99,6 +99,7 @@ public abstract class Block extends CodeElement {
                 for(Variable v : ((VarDeclaration) e).getVars()){
                     local_vars.add(v);
                 }
+                ((VarDeclaration) e).make_assignments(scope_vars);
             }
         }
     }
@@ -110,6 +111,19 @@ public abstract class Block extends CodeElement {
                 break; //no more than one.
             }
         }
+    }
+
+    /**
+     * checking if a string and a regex match. different from string.matches by handling the null case.
+     * @param s1 the string
+     * @param regex the regex.
+     * @return
+     */
+    static boolean Strings_match(String s1, String regex)
+    {
+        if (s1==null)
+            return (regex==null);
+        return s1.matches(regex);
     }
 
 }

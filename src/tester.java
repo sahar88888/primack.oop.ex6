@@ -14,11 +14,8 @@ public class tester {
 
     public static void main(String[] args) {
 
-        String line ="final int bla";
-        Pattern p = Pattern.compile(VAR_TYPE);
-        Matcher m = p.matcher(line);//searching for the type
-        m.find();
-        System.out.println(m.group(2));
+        String line ="int = 5.6";
+        System.out.println("'ab'".matches(CHAR_VAL));
     }
 
 

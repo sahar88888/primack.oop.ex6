@@ -6,47 +6,15 @@ saharprimack
 =      File description     =
 =============================
 (filename for each file and a 2-3 rows description)
-DirectoryProcessor.java:
-The main class, in which we accept the input . It generates from the commandFile the different Sections,
-and then prints all files of each section, as wanted.
 
-Filters package:
-Filter.java:
-the "father class" of our filter subclasses. represents a basic filter, with the function of receiving a
-file and deciding whether it accepts it or not. (The way by which it is done, is implemented by the
-inheriting classes of the package Filters).
+Code_elements package:
+a package containing all classes that represent elements that can be in a code - such as a variable decleration, a
+method, a condition, etc.
 
-<filter_name>_filter.java:
-the particular filter, filters files in a directory
-
-
-FilterFactory.java:
-A class that is capable of creating a filter by a given string which represents the filter attributes.
-
-Errors package:
-Error_type1.java:
-The error class for warnings after which the code keeps running
-
-ErrorType2.java:
-extends exception, a father class for all the type 2 errors(major errors that we dont continue when running into)
-
-<error_name>Error.java:
-extends Error_type2, is the exceptions that we wrote that the program can run into.
-
-FileWrapper.java:
-A wrapper class for java's File, to make some of the attributes we needed (such as file type) easier to
-obtain.
-
-Section.java:
-A class representing a section, which has a filter and an order string, and has a method for printing all
-files relevant to the section.
-
-Filegroup.java:
-Contains a group of files, which is created from all known files by a given filter, and then orders them
-with a given comparator. Each subclass of Filegroup has its on comparator, for sorting its files.
-
-<FilegroupName>_fileGroup.java:
-Extends Filegroup, holds a specific File comparator by which it sorts its lists.
+    Code_element.java:
+    The main class in the hierarchy. It's main methods are:
+     CreateFromLine, which - given a line of code, generates a matching code element
+     isLegal: a method that is unique for each codeElement type, in which the
 
 =============================
 =          Design           =

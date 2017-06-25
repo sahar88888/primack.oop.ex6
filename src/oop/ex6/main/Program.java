@@ -38,12 +38,16 @@ public class Program extends Block {
         for(int i = 0; i < elements.size(); i++) {
             CodeElement e = elements.get(i);
             if (e instanceof VarDeclaration) {
-                e.is_legal(local_vars);
 
-                for (Variable v : ((VarDeclaration) e).getVars()) {
+                e.is_legal(local_vars);
+                VarDeclaration declaration = (VarDeclaration) e;
+                for (Variable v : declaration.getVars())
+                {
                     local_vars.add(v);
                 }
-                elements.remove(i);
+                declaration.make_assignments(local_vars);
+
+                elements.remove(e); //was i.
                 i--;
             }
             if(e instanceof Method) {

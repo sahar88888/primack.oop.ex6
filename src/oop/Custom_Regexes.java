@@ -17,11 +17,11 @@ import static code_elements.Variable.VarType.*;
     // strings for variable values:
     public static String INT_VAL = "(-?[\\d]+)";
     public static String DOUBLE_VAL = "("+INT_VAL+"(\\.[\\d]+)?"+")";
-    public static String STRING_VAL = "(\"\\.*\")";
+    public static String STRING_VAL = "(\".*\")";
     public static String BOOLEAN_VAL = "(true|false|"+DOUBLE_VAL+")";
-    public static String CHAR_VAL = "('\\.')";
+    public static String CHAR_VAL = "('.')";
 
-    public static String VAL = "("+INT_VAL+"|"+STRING_VAL+"|"+BOOLEAN_VAL+"|"+CHAR_VAL+")";//general value.
+    public static String VAL = "("+BOOLEAN_VAL+"|"+STRING_VAL+"|"+CHAR_VAL+")";//general value.
 
     public static String WHITESPACE = "(\\s+)";
     public static String P_WHITESPACE= "(\\s*)"; //stands for possible
@@ -33,21 +33,23 @@ import static code_elements.Variable.VarType.*;
             "(int|double|String|boolean|char))";
     public static String VAR_NAME = "(_?[a-zA-Z_][\\w]*)";// a pattern for a
     // var name. (e.g. A1, _Zorg_42).
-    public static String ASSIGNMENT = "(("+VAR_NAME+")" +
-            ""+WHITESPACE+"="+WHITESPACE+"("+VAL+"))";
-    public static String NAME_OR_ASSIGNMENT = "("+VAR_NAME+"|"+ASSIGNMENT+")";
-    public static String METHOD_NAME = "([a-zA-Z][\\w]*)";// a pattern for a
-    // name. (e.g. A1, print_files
+
+
     public static String EXPRESSION = "(" + VAL + "|" + VAR_NAME + ")";
+    public static String ASSIGNMENT = "("+VAR_NAME+")" +P_WHITESPACE+"="+P_WHITESPACE+ EXPRESSION;
+    public static String NAME_OR_ASSIGNMENT = "("+VAR_NAME+"|"+ASSIGNMENT+")";
 
     public static String CONDITION_NAME = "(if|while)";
     public static String BOOLEAN_OPERATOR = "(\\|\\| | \\&\\&)";//string for boolean operator.
 
+    public static String METHOD_NAME = "([a-zA-Z][\\w]*)";// a pattern for a
+    // name. (e.g. A1, print_files
     public static String METHOD_DECLARATION= "(void" + WHITESPACE +
             METHOD_NAME + "\\(("+ P_WHITESPACE + VAR_TYPE + WHITESPACE +
             VAR_NAME + "(" + P_WHITESPACE + "," + P_WHITESPACE + VAR_TYPE +
     WHITESPACE + VAR_NAME + ")*"+ P_WHITESPACE+")?" +"\\)" +
             P_WHITESPACE+"\\{)";
+
     public static String METHOD_CALL = "(" + METHOD_NAME + "\\((" +
             P_WHITESPACE+EXPRESSION + "(" + P_WHITESPACE +"," + P_WHITESPACE
     + EXPRESSION + ")*" +")?\\)" + P_WHITESPACE + ";)";
