@@ -44,7 +44,7 @@ public class Method extends Block {
     @Override
     public void is_legal(ArrayList<Variable> scope_vars) throws BadElementException {
         for(String sub : GetSubStrings(line,PARAM_REGEX)){
-            String varname = sub.split(WHITESPACE)[1] + ";";
+            sub = sub+";";
             // add parameters as variables
             VarDeclaration var_dec = VarDeclaration.createFromLine(sub);
             for(Variable v: var_dec.getVars()) {
