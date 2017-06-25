@@ -48,6 +48,7 @@ public class Method extends Block {
             // add parameters as variables
             VarDeclaration var_dec = VarDeclaration.createFromLine(sub);
             for(Variable v: var_dec.getVars()) {
+                v.assign(ExampleString(v.getType()));
                 paramTypes.add(v.getType());
             }
             elements.add(0,var_dec); // add var declaration like it is in
