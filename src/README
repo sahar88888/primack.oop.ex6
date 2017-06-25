@@ -14,7 +14,8 @@ method, a condition, etc.
     Code_element.java:
     The main class in the hierarchy. It's main methods are:
      CreateFromLine, which - given a line of code, generates a matching code element
-     isLegal: a method that is unique for each codeElement type, in which the
+     isLegal: a method that is unique for each codeElement type, in which they are "activated"(assigning values, etc..)
+     and check their legality in the context of the code.
 
 =============================
 =          Design           =
