@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Program extends Block {
 
-    static ArrayList<Method> methods;
+    static ArrayList<Method> methods = new ArrayList<>();
 
     public Program(BufferedReader f) throws IOException, BadElementException{
         super(f, "");
