@@ -121,8 +121,8 @@ public abstract class Block extends CodeElement {
      */
     static boolean Strings_match(String s1, String regex)
     {
-        if (s1==null)
-            return (regex==null);
+        if (s1==null||regex==null)
+            return (regex==s1);
         return s1.matches(regex);
     }
 
